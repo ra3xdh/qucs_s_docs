@@ -1,0 +1,167 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage[left=20mm,top=20mm,right=20mm,bottom=20mm]{geometry}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[pdftex]{graphicx}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{gnuplot-lua-tikz}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{soul}
+% \usepackage{lineno}
+\usepackage[ruled,norelsize]{algorithm2e}
+\usepackage{listings}
+
+
+%opening
+\title{Qucs-S: Getting started analog simulation with Ngspice backend}
+\author{Vadim Kuznetsov}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+
+%\end{abstract}
+
+\section{Introduction}
+
+Qucs-S was forked from the Qucs cross-platform circuit simulator in 2017. "S" letter indicates SPICE. The purpose of the Qucs-S subproject is to use free SPICE circuit simulation kernels with the Qucs GUI. It merges the power of SPICE and the simplicity of the Qucs GUI. Qucs intentionally uses its own SPICE incompatible simulation kernel Qucsator. It has advanced RF and AC domain simulation features, but most of the existing industrial SPICE models are incompatible with it. Qucs-S is not a simulator by itself, but requires to use a simulation backend with it. The schematic document format of Qucs and Qucs-S are fully compatible. Qucs-S allows to use the following simulation kernels with it:
+
+\begin{itemize}
+ \item  Ngspice is recommended to use. Ngspice is powerful mixed-level/mixed-signal circuit simulator. The most of industrial SPICE models are compatible with Ngspice. It has an excellent performance for time-domain simulation of switching circuits and powerful postprocessor.
+ \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch. It supports basic SPICE simulation types and has an advanced RF simulation features such as Harmonic balance simulation.
+ \item SpiceOpus is developed by the Faculty of Electrical Engineering of the Ljubljana University. It based on the SPICE-3f5 code.
+ \item Qucsator as backward compatible and for RF simulation with microwave devices.
+\end{itemize}
+
+Qucs-S is a cross-platform software and supports a number of Linux distributions alongside with Windows\texttrademark. The Linux packages are generated automatically with the Open Build Service (OBS ) system. Check the official website to get the list of supported distributions. Please keep in mind that the installation packages doesn't provide the simulation kernel. It need to be installed separately. The Ngspice is recommended. For Debian and Ubuntu it is installed automatically as the dependency. Refer to Ngspice website for installation instructions for other platforms.
+
+\section{Setup on the first start}
+
+Once the Qucs-S is installed, it asks to select the simulation kernel. The following window (Fig. \ref{fig:sim_setup}) is opened after the first start  of the application. Select the default simulator using the drop-down list and correct the simulator executable paths if necessary. These settings could be corrected later using the \textit{Simulation}\verb|->|\textit{Select default simulator} menu. 
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/sim_setup.png}
+  \end{center}
+  \caption{Simulator setup dialog} \label{fig:sim_setup}
+\end{figure}
+
+\section{Main window structure}
+
+
+The Qucs-S main window is shown in the Fig. \ref{fig:mainwin}. The main window consists of two areas: schematic editor (4) on the right side and main dock (1) on the left side. Several schematics could be opened simultaneously. It's possible to switch between the opened schematics using the tabular bar above the schematic editor area.    
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=\textwidth]{img/mainwin.png}
+  \end{center}
+  \caption{Qucs-S main window. See text for explanations} \label{fig:mainwin}
+\end{figure}
+
+The dock on the left side has four tabs (3): \emph{Projects}, \emph{Content}, \emph{Components}, and \emph{Libraries}. The \emph{Projects} tab is opened after the application start. It is empty, because there is no projects after the fresh installation. The \emph{Components} tab (see Fig. \ref{fig:mainwin}) contains a list of primitive devices available in Qucs. The components are divided into several categories (lumped devices, nonlinear devices, simulation, etc.). The categories could be selected from the drop-down list (2). The status bar is located on the bottom side of the main window. The active simulation kernel is displayed on the status bar (for example Ngspice on Fig.\ref{fig:mainwin}). 
+
+The toolbar area is located on the top side of the main window below the main menu. Some important buttons are located on the toolbar. They are: \emph{Wire} (6), \emph{Node name} (7), \emph{Ground} (8), and \emph{Marker} (9).
+
+Everything in Qucs-S is considered to be a component. The simulations, equations, and SPICE directives are also special components that could be found in dedicated categories in the component pallet. The diagrams are also special components and could be found in the \emph{diagrams} category in the drop-down list (2).
+
+To place the component on schematic choose desired category from the drop-down list (2) (for example "lumped components") and click on the symbol (for example "Resistor"). Moving the mouse cursor into the working area (4) you are carrying a drawing of a resistor symbol. Pressing the right mouse button rotates the symbol, pressing the left mouse button places the component onto the schematic. 
+
+The components properties could be edited using the properties dialog (Fig. \ref{fig:prop_dlg}) that is called from the context menu of the component or after the left mouse button double click. 
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{img/prop_dlg.png}
+  \end{center}
+  \caption{Component properties dialog} \label{fig:prop_dlg}
+\end{figure}
+
+\section{Step by step guide how to setup an analog simulation}
+
+Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic is shown in the Fig. \ref{fig:rc}. Let's perform the AC and transient simulations and plot the magnitude response of the circuit and the waveforms on the input and output nodes. Perform the following steps to draw the schematic and setup the simulation. 
+
+\begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=\textwidth]{img/rc.png}
+  \end{center}
+  \caption{RC-circuit in Qucs-S} \label{fig:rc}
+\end{figure}
+
+
+\begin{itemize}
+ \item \textbf{Step 1:} place components on the schematic and set their properties as show in the Fig. \ref{fig:rc}. We need resitor, capacitor (both could be found in the \emph{lumped devices} category) and AC voltage source (from \emph{sources} category). The ground and wires could be taken from the application tool bar (see Fig. \ref{fig:mainwin}) using the buttons (6) and (8). 
+ 
+ \item \textbf{Step 2:} place simulations on the schematic. We need AC simulation and Transient simulation. Both could be taken from the \emph{simulations} category (see Fig. \ref{fig:rc}). The procedure is same as for usual components. Setup the properties of the simulations as shown in the Fig. \ref{fig:rc}. A special dialog window opens upon the double click on the simulation device (Fig. \ref{fig:dlg_sim}). For AC simulation enter the start (1 Hz) and stop (10 kHz) frequencies and select the logarithmic sweep type. For transient simulation enter the stop time (2 ms) and points number (200 points). 
+ \begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{img/dlg_sim.png}
+  \end{center}
+  \caption{Simulation properties dialog} \label{fig:dlg_sim}
+\end{figure}
+ 
+ \pagebreak[4]
+ 
+ \item \textbf{Step 3:} place the node labels \verb|in| and \verb|out| using the button (6) on the toolbar (see Fig. \ref{fig:mainwin}). The node name could be set in a special dialog window (Fig. \ref{fig:nod_lbl}). 
+ \begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/nod_lbl.png}
+  \end{center}
+  \caption{Node label setup dialog} \label{fig:nod_lbl}
+\end{figure}
+ 
+ \item \textbf{Step 4:} Place equation for the magnitude response $K=V_{out}/V_{in}$ on the schematic. Equation is the special component called \emph{Nutmeg equation} that could be found in the \emph{spice specific sections} category. The full SPICE syntax for mathematical functions and node names is supported. Refer to Ngspice manual for more details. The simulation should be specified for each Nutmeg equation. We will calculate the magnitude response for the AC simulation only and therefore we need to enter \verb|ac| as the first property for this device as shown on the Fig. \ref{fig:eq}.
+  \begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/nutmeg_eq.png}
+  \end{center}
+  \caption{Equation setup dialog} \label{fig:eq}
+\end{figure}
+ 
+ \item \textbf{Step 5:} Save the schematic document as the file with the \verb|*.sch| extension using the \textit{File} \verb|->| \textit{Save as} menu or press the \verb|Ctrl-S| shortcut. The schematic is ready for the simulation now.
+ 
+ \item \textbf{Step 6:} simulate the schematic. Press the \textit{Simulation} \verb|->| \textit{Simulate} or press the F2 hotkey on the keyboard. The dialog window containing the simulator log messages will appear shortly (Fig. \ref{fig:sim_dlg}). This dialog window contains the simulation console where the messages from the Ngspice are shown. 
+ 
+ It should report that the simulation finished without errors. If you see error messages check your schematic and application settings. After the Ngspice reports about the finished simulation, close this window clicking the \emph{Exit} button. The Qucs-S will automatically switch from schematic to the display page where diagrams could be placed. It is also possible to save the netlist file from this dialog
+ .
+  \begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/sim_dlg.png}
+  \end{center}
+  \caption{Simulation dialog} \label{fig:sim_dlg}
+  
+\end{figure}
+
+\item \textbf{Step 7:} place diagrams on the display page (Fig. \ref{fig:rc_dpl}). We need two cartesian diagrams for magnitude response and transient waveforms. The diagrams are also special components that could be found in the \emph{diagrams} category. The traces could be selected in the special diagram properties dialog (Fig. \ref{fig:diagr_dlg}). Select the \verb|ac.k| traces for one diagram and \verb|tran.v(in)| and \verb|tran.v(out)| traces for another diagram. It is also possible to setup the axis limits and type and the color scheme for the diagram. Select logarithmic X-axis for the magnitude response graph using the settings in the \emph{Properties} tab. The markers could be placed on graphs using the button (9) from the toolbar (Fig. \ref{fig:mainwin}). The position of the marker could be adjiusted using the arrow keys on the keyboard. 
+
+  \begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=\textwidth]{img/rc_dpl.png}
+  \end{center}
+  \caption{Display page with two plots} \label{fig:rc_dpl}
+  \end{figure}
+  
+    \begin{figure}[!ht]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{img/diagr_dlg.png}
+  \end{center}
+  \caption{Diagram properties dialog} \label{fig:diagr_dlg}
+  \end{figure}
+  
+\end{itemize}
+
+\section{Conclusion}
+
+In this tutorial it was considered how to perform a first start setup of the Qucs-S with the Ngspice backend and make an AC and Transient simulation of the simple RC circuit. It was shown how to add postprocessor equations and waveforms plot. Refer to official Qucs-S and Ngspice documentation to learn more advanced simulation techniques. 
+
+
+
+\end{document}
+
+
