@@ -85,6 +85,8 @@ The components properties could be edited using the properties dialog (Fig. \ref
 
 \section{Step by step guide how to setup an analog simulation}
 
+\subsection{AC and transient simulation}
+
 Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic is shown in the Fig. \ref{fig:rc}. Let's perform the AC and transient simulations and plot the magnitude response of the circuit and the waveforms on the input and output nodes. Perform the following steps to draw the schematic and setup the simulation. 
 
 \begin{figure}[!ht]
@@ -155,6 +157,45 @@ Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic i
   \end{figure}
   
 \end{itemize}
+
+
+\subsection{DC analysis}
+
+Qucs-S unlike Qucs has no special DC simulation mode. If only \emph{DC 
+simulation} component is placed on the schematic no simulation will be launched 
+and error message will be shown. This component is kept for backward 
+compatibility with old Qucs schematics.
+
+But there exists two modes of the DC simulation:
+
+\begin{itemize}
+ \item Show operating point directly on the circuit. This mode is activted when 
+pressing F8 keyboard shortcut or using \emph{Simulation->Show bias} menu 
+entry. See the Fig. \ref{fig:rdiv_f8} for example of such simulation.
+ \item DC sweep mode. You need to insert \emph{Parameter sweep} simulation 
+component and attach it to the DC simulation. This simulation mode could be 
+used for plotting IV-curves or getting table output. See the Fig. 
+\ref{fig:rdiv_dc} for example of this simulation. 
+\end{itemize}
+
+
+\begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/rdiv_f8.png}
+    \end{center}
+    \caption{Operating point simulation of the voltage divider} 
+\label{fig:rdiv_f8}
+\end{figure}
+
+
+\begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/rdiv_dc.png}
+    \end{center}
+    \caption{Using DC sweep to get table output of the resisitive divider 
+voltage} 
+\label{fig:rdiv_dc}
+\end{figure}
 
 \section{Conclusion}
 
