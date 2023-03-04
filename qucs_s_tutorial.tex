@@ -197,6 +197,36 @@ voltage}
 \label{fig:rdiv_dc}
 \end{figure}
 
+\section{List of mathematical functions supported by Nutmeg equation}
+
+The full list of the mathematical functions supported by Nutmeg equations could be found at the section 17.2 of the Ngspice manual. The next table shows the most frequently used functions. The input of all functions listed in the next table is a single vector representing voltage or current. Refer to the section 17 of the Ngspice manual for detailed description and information on additional functions.
+
+\begin{table}[!ht]
+\caption{The list of the most frequently used Nutmeg functions}
+ \begin{tabularx}{\textwidth}{|r|X|}
+\hline
+Function & Description \\
+\hline
+mag & Magnitude of vector (same as abs(vector)) \\
+ph & Phase of vector. \\
+cph & Phase of vector. Continuous values, no discontinuity at $\pm\pi$ \\
+unwrap & Phase of vector. Continuous values, no discontinuity at $\pm\pi$ Real phase vector in degrees as input \\
+real & The real component of vector \\
+imag & The imaginary part of vector\\
+conj & The complex conjugate of a vector \\
+db & Decibels $20 \log_{10}()$ of the vector \\
+abs & The absolute value of vector (same as mag) \\
+integ & Integrates over the given vector (versus the real component of the scale vector) \\ 
+deriv & Calculates the derivative of the given vector \\
+vecd & Compute the differential of a vector \\
+group\_delay & Calculates the group delay $-d\phi/d\omega$ \\
+\hline
+\end{tabularx}
+\end{table}
+
+
+
+
 \section{Conclusion}
 
 In this tutorial it was considered how to perform a first start setup of the Qucs-S with the Ngspice backend and make an AC and Transient simulation of the simple RC circuit. It was shown how to add postprocessor equations and waveforms plot. Refer to official Qucs-S and Ngspice documentation to learn more advanced simulation techniques. 
