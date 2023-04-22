@@ -159,7 +159,7 @@ Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic i
 \end{itemize}
 
 
-\subsection{DC analysis}
+\subsection{DC analysis} \label{sec:dc}
 
 Qucs-S unlike Qucs has no special DC simulation mode. If only \emph{DC 
 simulation} component is placed on the schematic no simulation will be launched 
@@ -192,10 +192,78 @@ used for plotting IV-curves or getting table output. See the Fig.
     \begin{center}
         \includegraphics[width=0.8\textwidth]{img/rdiv_dc.png}
     \end{center}
-    \caption{Using DC sweep to get table output of the resisitive divider 
+    \caption{Using DC sweep to get table output of the resistive divider 
 voltage} 
 \label{fig:rdiv_dc}
 \end{figure}
+
+\section{Parameter sweep}
+
+\subsection{Device sweep}
+
+Parameter sweep is defined as the special simulation type that is attached to any other simulation. Let's consider an example
+and attach parameter sweep to the circuit shown in the Figure \ref{fig:rc}. We will see the influence of the resistance of
+the RC-circuit on the cutoff frequency. 
+
+\textbf{Important note:} unlike Qucs before version 0.0.20, Qucs-S doesn't support the sweep of variables directly. Legacy Qucs schematics using variable sweep will not work. Parameter sweep supports only device sweep. Resistor, capacitor or source are accepted.  
+
+Perform the following steps to add parameter sweep:
+
+\begin{itemize}
+ \item \textbf{Step 1:} Place parameter sweep component on the schematic sheet (Figure \ref{fig:rc_parsw}). 
+ The \emph{Parameter sweep} device could be found in the \emph{simulations} group. 
+ 
+    \begin{figure}[!ht]
+        \begin{center}
+            \includegraphics[width=0.8\textwidth]{img/rc_parsw.png}
+        \end{center}
+        \caption{Adding parameter sweep on the schematic} 
+    \label{fig:rc_parsw}
+    \end{figure}
+
+\item \textbf{Step 2:} Set the properties of the parameter sweep simulation. After the double click the dialog window will be 
+opened (Figure \ref{fig:parsw}). The \emph{Simulation} drop-down list is the the name of simulation component to which the parameter sweep is attached. For our example we need to select the \verb|AC1| simulation from the drop-down list, because we attaching the parameter sweep to the AC simulation. The \emph{Sweep parameter} input field is the \textbf{device} name. Variables or other objects 
+name are not acceptable here! Enter the \verb|R1| device name here. The \emph{Start}, \emph{Stop}, \emph{Step}, and \emph{Number} input fields serve for the definition of the sweep range. We will sweep the \verb|R1| value from 1 kOhm to 5 kOhm and take 4 sweep points. 
+
+    \begin{figure}[!ht]
+        \begin{center}
+            \includegraphics[width=0.5\textwidth]{img/parsw_dlg.png}
+        \end{center}
+        \caption{Setting parameter sweep properties} 
+    \label{fig:parsw}
+    \end{figure}
+    
+\item \textbf{Step 3:} Run the simulation and place the diagrams as for usual simulation (Figure \ref{fig:parsw_mr}). You should see the family of the curves. You may place a marker on the diagram and move it between the sweep curves with \emph{Arrow Up} and \emph{Arrow Down} keys.  
+    
+        \begin{figure}[!ht]
+        \begin{center}
+            \includegraphics[width=0.8\textwidth]{img/parsw_mr.png}
+        \end{center}
+        \caption{Magnitude response of the RC-circuit with the parameter sweep} 
+    \label{fig:parsw_mr}
+    \end{figure}
+    
+\end{itemize}
+
+
+\subsection{DC sweep}
+
+DC sweep simulation takes place when parameter sweep is attached to the DC simulation. Such simulation mode is explained in
+the Section \ref{sec:dc}. DC sweep only accepts device name (resistor or source) as the sweep parameter name. This simulation mode
+usually serves for obtaining the IV-curves. 
+
+\subsection{Variable sweep}
+
+The recent version of the Ngspice support sweeping of the varibles. The variable should be defined using the \verb|.PARAM| 
+statement (available at the \emph{SPICE specific sections} group). Qucs-S doesn't create the variable automatically. Refer to the schematic shown in the Figure \ref{fig:rc_parsw_var} for the example of such simulation mode.
+
+        \begin{figure}[!ht]
+        \begin{center}
+            \includegraphics[width=0.8\textwidth]{img/rc_parsw_var.png}
+        \end{center}
+        \caption{Magnitude response of the RC-circuit with the parameter sweep} 
+    \label{fig:rc_parsw_var}
+    \end{figure}
 
 \section{List of mathematical functions supported by Nutmeg equation}
 
