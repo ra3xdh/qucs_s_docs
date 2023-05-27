@@ -264,6 +264,50 @@ statement (available at the \emph{SPICE specific sections} group). Qucs-S doesn'
         \caption{Magnitude response of the RC-circuit with the parameter sweep} 
     \label{fig:rc_parsw_var}
     \end{figure}
+    
+\section{Digital simulation}
+
+\subsection{Digital devices with analog model}
+
+Digital devices including logic gates, flip-flops, and more complex devices could be found in the group \emph{Digital components}. Some of these devices have both analog and digital model. Ngspice simulation operates using XSPICE models. Here is the list of these devices:
+
+\begin{itemize}
+ \item Logic gates, inverter and buffer
+ \item D-, JK-, T-flip-flops
+ \item Digital source
+\end{itemize}
+
+The usage of these devices in analog simulation mode has no special requirements. The example shown in the Figure \ref{fig:logic_gen} illustrates the transient simulation of the RC oscillator circuit containing two inverter logic gates. The power supply voltage for digital devices should be set using the \verb|VCC| parameter with \verb|.PARAM| section.
+
+    \begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/logic_gen.png}
+    \end{center}
+    \caption{Oscillator example using logic gates} \label{fig:logic_gen}
+    \end{figure}
+
+
+\subsection{Digital simulation with Verilog/VHDL}
+
+The most of digital components except of the listed in the previous section doesn't contain analog SPICE model. These devices are  supported by digital simulation mode only. \textbf{Mixing digital and analog devices (like RCL) in one circuit is not supported!} You need to install one the following free backends to perform digital simulation
+
+\begin{itemize}
+ \item Icarus Verilog \verb|iverilog| \url{https://steveicarus.github.io/iverilog/}
+ \item FreeHDL \url{http://freehdl.seul.org/}
+\end{itemize}
+
+
+Place on the schematic field a special device named \emph{Digital simulation} to switch Qucs-S to digital mode. Verilog or VHDL backend will be started automatically instead of SPICE if digital simulation is found in the schematic. User doesn't need to switch 
+Qucs-S to the digital mode in the application settings. 
+
+There are two modes of the digital simulation: truth table and timing diagram. An example of the digital simulation of the 2-bit decoder/demultiplexer is shown in the Figure \ref{fig:demux}. This simulation uses Verilog and timing diagram mode. 
+
+    \begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/demux.png}
+    \end{center}
+    \caption{Simulation of the digital circuit with iverilog} \label{fig:demux}
+    \end{figure}
 
 \section{List of mathematical functions supported by Nutmeg equation}
 
