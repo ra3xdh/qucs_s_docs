@@ -30,7 +30,7 @@
 
 %\end{abstract}
 
-\section{Introduction}
+\section{Introduction} \label{sec:intro}
 
 Qucs-S was forked from the Qucs cross-platform circuit simulator in 2017. "S" letter indicates SPICE. The purpose of the Qucs-S subproject is to use free SPICE circuit simulation kernels with the Qucs GUI. It merges the power of SPICE and the simplicity of the Qucs GUI. Qucs intentionally uses its own SPICE incompatible simulation kernel Qucsator. It has advanced RF and AC domain simulation features, but most of the existing industrial SPICE models are incompatible with it. Qucs-S is not a simulator by itself, but requires to use a simulation backend with it. The schematic document format of Qucs and Qucs-S are fully compatible. Qucs-S allows to use the following simulation kernels with it:
 
@@ -45,7 +45,7 @@ Qucs-S is a cross-platform software and supports a number of Linux distributions
 
 \section{Setup on the first start}
 
-Once the Qucs-S is installed, it asks to select the simulation kernel. The following window (Fig. \ref{fig:sim_setup}) is opened after the first start  of the application. Select the default simulator using the drop-down list and correct the simulator executable paths if necessary. These settings could be corrected later using the \textit{Simulation}\verb|->|\textit{Select default simulator} menu. 
+Once the Qucs-S is installed, it asks to select the simulation kernel. Since the version 2.0.0 the application tries to find Ngspice in some usual system locations on the first start. If the Ngspice executable was found automatically the information message will be shown. Otherwise the user will be prompted to configure the simulators manually. The following window (Fig. \ref{fig:sim_setup}) is opened after the first start  of the application. Select the default simulator using the drop-down list and correct the simulator executable paths if necessary. These settings could be corrected later using the \textit{Simulation}\verb|->|\textit{Select default simulator} menu. 
 
 \begin{figure}[!ht]
   \begin{center}
@@ -53,6 +53,8 @@ Once the Qucs-S is installed, it asks to select the simulation kernel. The follo
   \end{center}
   \caption{Simulator setup dialog} \label{fig:sim_setup}
 \end{figure}
+
+Quick switching of the simulation kernel without application restart is supported since version 2.0.0. See the section \ref{sec:quick_sw} for more details.
 
 \section{Main window structure}
 
@@ -287,7 +289,7 @@ The usage of these devices in analog simulation mode has no special requirements
     \end{figure}
 
 
-\subsection{Digital simulation with Verilog/VHDL}
+\subsection{Digital simulation with Verilog/VHDL} \label{sec:digi}
 
 The most of digital components except of the listed in the previous section doesn't contain analog SPICE model. These devices are  supported by digital simulation mode only. \textbf{Mixing digital and analog devices (like RCL) in one circuit is not supported!} You need to install one the following free backends to perform digital simulation
 
@@ -307,6 +309,32 @@ There are two modes of the digital simulation: truth table and timing diagram. A
         \includegraphics[width=0.8\textwidth]{img/demux.png}
     \end{center}
     \caption{Simulation of the digital circuit with iverilog} \label{fig:demux}
+    \end{figure}
+
+\section{Quick switching of the simulation kernel} \label{sec:quick_sw}
+
+\subsection{Quick simulator selection}
+
+Qucs-S supports a quick switching of the simulation kernel since the version 2.0.0. Application restart is not required anymore to apply this setting. The simulator could be selected at any time using the drop-down list on the toolbar Figure \ref{fig:sim_switch}. The simulator location must be configure using the application settings dialog Figure \ref{fig:sim_setup} and the specified simulator executable binary must exist. Otherwise the simulator will be not shown in the drop-down list on the toolbar and not available for selection. The list of the supported simulation kernels could be found in the section \ref{sec:intro}.
+
+Also keep in mind that Qucs-S distribution doesn't provide any simulation kernels and simulators must be installed separately. If you are using Linux DEB package, the Ngspice will be installed automatically as the package dependency. This selection affects only analog simulation. The digital simulation kernel will be executed automatically if the schematic contains the digital simulation (see the section \ref{sec:digi}).  
+
+    \begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/sim_switch.png}
+    \end{center}
+    \caption{Simulator choose drop-down list} \label{fig:sim_switch}
+    \end{figure}
+
+\subsection{Incompatible components}
+    
+Some of devices may be incompatible with the selected simulation kernel. For example, microstrip lines are designed for Qucsator and are not available with Ngspice. Such devices will be not available for insertion in the schematic and will be grayed out (see Figure \ref{fig:grey}) on the schematic view. An appropriate warning will be shown if the user tries to simulate the schematic containing incompatible devices.
+
+    \begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/ms_grey.png}
+    \end{center}
+    \caption{Schematic containing incompatible devices} \label{fig:grey}
     \end{figure}
 
 \section{List of mathematical functions supported by Nutmeg equation}
