@@ -132,7 +132,7 @@ Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic i
  
  \item \textbf{Step 6:} simulate the schematic. Press the \textit{Simulation} \verb|->| \textit{Simulate} or press the F2 hotkey on the keyboard. The dialog window containing the simulator log messages will appear shortly (Fig. \ref{fig:sim_dlg}). This dialog window contains the simulation console where the messages from the Ngspice are shown. 
  
- It should report that the simulation finished without errors. If you see error messages check your schematic and application settings. After the Ngspice reports about the finished simulation, close this window clicking the \emph{Exit} button. The Qucs-S will automatically switch from schematic to the display page where diagrams could be placed. It is also possible to save the netlist file from this dialog
+ It should report that the simulation finished without errors. If you see error messages check your schematic and application settings. After the Ngspice reports about the finished simulation, close this window clicking the \emph{Exit} button. Now the diagrams could be added on schematic field. It is also possible to save the netlist file from this dialog
  .
   \begin{figure}[!ht]
   \begin{center}
@@ -142,13 +142,13 @@ Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic i
   
 \end{figure}
 
-\item \textbf{Step 7:} place diagrams on the display page (Fig. \ref{fig:rc_dpl}). We need two cartesian diagrams for magnitude response and transient waveforms. The diagrams are also special components that could be found in the \emph{diagrams} category. The traces could be selected in the special diagram properties dialog (Fig. \ref{fig:diagr_dlg}). Select the \verb|ac.k| traces for one diagram and \verb|tran.v(in)| and \verb|tran.v(out)| traces for another diagram. It is also possible to setup the axis limits and type and the color scheme for the diagram. Select logarithmic X-axis for the magnitude response graph using the settings in the \emph{Properties} tab. The markers could be placed on graphs using the button (9) from the toolbar (Fig. \ref{fig:mainwin}). The position of the marker could be adjiusted using the arrow keys on the keyboard. 
+\item \textbf{Step 7:} place diagrams on the schematic (Fig. \ref{fig:rc_dpl}). We need two cartesian diagrams for magnitude response and transient waveforms. The diagrams are also special components that could be found in the \emph{diagrams} category. The traces could be selected in the special diagram properties dialog (Fig. \ref{fig:diagr_dlg}). Select the \verb|ac.k| traces for one diagram and \verb|tran.v(in)| and \verb|tran.v(out)| traces for another diagram. It is also possible to setup the axis limits and type and the color scheme for the diagram. Select logarithmic X-axis for the magnitude response graph using the settings in the \emph{Properties} tab. The markers could be placed on graphs using the button (9) from the toolbar (Fig. \ref{fig:mainwin}). The position of the marker could be adjiusted using the arrow keys on the keyboard. 
 
   \begin{figure}[!ht]
   \begin{center}
     \includegraphics[width=\textwidth]{img/rc_dpl.png}
   \end{center}
-  \caption{Display page with two plots} \label{fig:rc_dpl}
+  \caption{Schematic with two diagrams added} \label{fig:rc_dpl}
   \end{figure}
   
     \begin{figure}[!ht]
