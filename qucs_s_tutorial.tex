@@ -281,7 +281,7 @@ Digital devices including logic gates, flip-flops, and more complex devices coul
 
 The usage of these devices in analog simulation mode has no special requirements. The example shown in the Figure \ref{fig:logic_gen} illustrates the transient simulation of the RC oscillator circuit containing two inverter logic gates. The power supply voltage for digital devices should be set using the \verb|VCC| parameter with \verb|.PARAM| section.
 
-    \begin{figure}
+    \begin{figure}[!ht]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{img/logic_gen.png}
     \end{center}
@@ -304,13 +304,38 @@ Qucs-S to the digital mode in the application settings.
 
 There are two modes of the digital simulation: truth table and timing diagram. An example of the digital simulation of the 2-bit decoder/demultiplexer is shown in the Figure \ref{fig:demux}. This simulation uses Verilog and timing diagram mode. 
 
-    \begin{figure}
+    \begin{figure}[!ht]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{img/demux.png}
     \end{center}
     \caption{Simulation of the digital circuit with iverilog} \label{fig:demux}
     \end{figure}
 
+
+\section{Tuning mode}
+
+Since the version v2.1.0 Qucs-S support the tuning simulation mode. The tuner allows to adjust the component property values using an interactive sliders and immediately see the result on diagrams. Tuning mode is supported for all simulation kernels including Ngspice and Qucsator. Tuner may act as an interactive alternative of the parameter sweep simulation.
+
+Let's consider how to use the tuning mode for the RC-circuit Fig. \ref{fig:rc}. The schematic is required to have the simulations and diagrams placed on schematic. The tuner will not work without defined simulations and diagrams. The tuner is activated using the \emph{Simulation->Tune} menu or F3 keyboard shortcut. The following dialog window (Fig. \ref{fig:tuner_dlg}) is shown after the activation. Then user need to click on the device or the device property with the left mouse button. A new slider will be added to the tuner window. It is possible to manually set the upper and lower limit of the tuned device property. The default limits are within the $\pm15\%$ range from the starting value.  
+
+
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.3\textwidth]{img/tuner_dlg.png}
+    \end{center}
+    \caption{Tuner dialog window} \label{fig:tuner_dlg}
+    \end{figure}
+    
+After the sliders are added to the tuner window it is possible to drag the sliders and observe the changes on the diagrams. For example we can see the cutoff frequency of the RC-circuit is increasing when C is decreasing. If the tuner window is closed the user will be prompted to update or revert the components values on schematic. 
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/tuner_rc.png}
+    \end{center}
+    \caption{Tuning of the RC-circuit} \label{fig:tuner_rc}
+    \end{figure}
+    
 \section{Quick switching of the simulation kernel} \label{sec:quick_sw}
 
 \subsection{Quick simulator selection}
@@ -319,9 +344,9 @@ Qucs-S supports a quick switching of the simulation kernel since the version 2.0
 
 Also keep in mind that Qucs-S distribution doesn't provide any simulation kernels and simulators must be installed separately. If you are using Linux DEB package, the Ngspice will be installed automatically as the package dependency. This selection affects only analog simulation. The digital simulation kernel will be executed automatically if the schematic contains the digital simulation (see the section \ref{sec:digi}).  
 
-    \begin{figure}
+    \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/sim_switch.png}
+        \includegraphics[width=0.66\textwidth]{img/sim_switch.png}
     \end{center}
     \caption{Simulator choose drop-down list} \label{fig:sim_switch}
     \end{figure}
@@ -330,7 +355,7 @@ Also keep in mind that Qucs-S distribution doesn't provide any simulation kernel
     
 Some of devices may be incompatible with the selected simulation kernel. For example, microstrip lines are designed for Qucsator and are not available with Ngspice. Such devices will be not available for insertion in the schematic and will be grayed out (see Figure \ref{fig:grey}) on the schematic view. An appropriate warning will be shown if the user tries to simulate the schematic containing incompatible devices.
 
-    \begin{figure}
+    \begin{figure}[!ht]
     \begin{center}
         \includegraphics[width=0.8\textwidth]{img/ms_grey.png}
     \end{center}
