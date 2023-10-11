@@ -19,7 +19,7 @@
 
 
 %opening
-\title{Qucs-S: Getting started analog simulation with Ngspice backend}
+\title{Qucs-S: Getting started analog simulation}
 \author{Vadim Kuznetsov}
 
 \begin{document}
@@ -36,9 +36,9 @@ Qucs-S was forked from the Qucs cross-platform circuit simulator in 2017. "S" le
 
 \begin{itemize}
  \item  Ngspice is recommended to use. Ngspice is powerful mixed-level/mixed-signal circuit simulator. The most of industrial SPICE models are compatible with Ngspice. It has an excellent performance for time-domain simulation of switching circuits and powerful postprocessor.
- \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch. It supports basic SPICE simulation types and has an advanced RF simulation features such as Harmonic balance simulation.
+ \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch. 
  \item SpiceOpus is developed by the Faculty of Electrical Engineering of the Ljubljana University. It based on the SPICE-3f5 code.
- \item Qucsator as backward compatible and for RF simulation with microwave devices.
+ \item Qucsator as backward compatible and for RF simulation with microwave devices and microstrip lines. Not recommended for general purpose circuits. 
 \end{itemize}
 
 Qucs-S is a cross-platform software and supports a number of Linux distributions alongside with Windows\texttrademark. The Linux packages are generated automatically with the Open Build Service (OBS ) system. Check the official website to get the list of supported distributions. Please keep in mind that the installation packages doesn't provide the simulation kernel. It need to be installed separately. The Ngspice is recommended. For Debian and Ubuntu it is installed automatically as the dependency. Refer to Ngspice website for installation instructions for other platforms.
@@ -251,8 +251,7 @@ name are not acceptable here! Enter the \verb|R1| device name here. The \emph{St
 \subsection{DC sweep}
 
 DC sweep simulation takes place when parameter sweep is attached to the DC simulation. Such simulation mode is explained in
-the Section \ref{sec:dc}. DC sweep only accepts device name (resistor or source) as the sweep parameter name. This simulation mode
-usually serves for obtaining the IV-curves. 
+the Section \ref{sec:dc}. DC sweep only accepts device name (resistor or source) as the sweep parameter name. The DC sweep with variable name will not work. This simulation mode usually serves for obtaining the IV-curves. 
 
 \subsection{Variable sweep}
 
@@ -335,6 +334,99 @@ After the sliders are added to the tuner window it is possible to drag the slide
     \end{center}
     \caption{Tuning of the RC-circuit} \label{fig:tuner_rc}
     \end{figure}
+    
+    
+\section{RF simulation}
+
+\subsection{Common notes on RF circuits analysis}
+
+RF circuits are often described by the scattering matrix (S-parameters). Many electrical properties of networks of components (inductors, capacitors, resistors) may be expressed using S-parameters, such as gain, return loss, voltage standing wave ratio (VSWR), reflection coefficient and amplifier stability. It is possible to convert the S-parameters to the Y or Z-matrix to estimate the input and output impedances of the circuit. 
+
+The S-parameters of the two-port circuit have the following meaning:
+
+\begin{itemize}
+ \item $S_{11}=\Gamma_1$ input reflection coefficient; if $S_{11}=0$ the circuit is ideally matched without reflection;
+ \item $S_{21}$ forward power gain $G_p$ from input (port 1) to output (port 2). For passive circuits always $G_p<1$; 
+ \item $S_{12}$ reverse power gain from output to input.
+ \item $S_{22}=\Gamma_2$ output reflection coefficient;
+\end{itemize}
+
+The VSWR and reflection coefficients are related as the following:
+
+\begin{equation}
+ \mathrm{VSWR} = \frac{1+|\Gamma|}{1-|\Gamma|}
+\end{equation}
+
+\subsection{RF simulation with Ngspice}
+
+Ngspice supports the S-parameter simulation since the version 37. Make sure that your Ngspice package has the version above 37. Otherwise this simulation mode will not work. There exists a special S-parameter simulation component that should be placed on schematic. The input and output ports of the circuit are represented by \emph{power source} component (Fig. \ref{fig:port50}). 
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.2\textwidth]{img/port50.png}
+    \end{center}
+    \caption{The power source representing 50-ohm port} \label{fig:port50}
+    \end{figure}
+    
+The parameters of this device are port number \verb|Num|, frequency $f$, and source power $P$ expressed in dBm. Two such sources should be connected to schematic input and output nodes respectively. 
+
+Let's consider an example and simulate the frequency response of the bandpass filter for the 20m hamradio band. The schematic is shown in the Fig. \ref{fig:filt20m}. 
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/filt20sim.png}
+    \end{center}
+    \caption{The simulation of the band-pass filter with Qucs-S and Ngspice} \label{fig:filt20m}
+    \end{figure}
+    
+The filter consists of LC-devices that could be found in the \emph{lumped devices} group. The filter schematic contains two 50-ohm port sources connected to its input and output nodes (\verb|in| and \verb|out|). The \emph{S-parameter simulation} component defines the frequency sweep range from 6 MHz to 20 MHz.
+    
+The simulation of the filter circuit could be launched as usual using the F2 keyboard shortcut. After the simulation has been finished a number of diagrams could be placed on schematic. Ngspice represents the S-parameter simulation data as the virtual voltages.For example, it's need to pick the \verb|v(s_2_1)| variable to plot the $S_{21}$ dependency. The cartesian diagram contains the $S_{11}$ and $S_{21}$ dependencies. The $S_{21}$ is the magnitude response of the filter. The same dependencies could plot on a Smith chart. Qucs-S provides a number of diagrams that could be used for RF circuits analysis. These diagrams are: Smith chart, admittance Smith chart, polar complex plane, and combined Smith chart and complex plane. 
+
+Ngspice converts the S-matrix to Y- and Z-matrix automatically. The Y and Z-parameters frequency dependencies could be plotted after the simulation. The Y and Z parameters are slow represented as the virtual voltages by Ngspice. For example the \verb|v(z_1_1)| variable will represent the $Z_{11}$ parameter. The simulation of the active RF circuits (like amplifiers) could be done similar to the passive circuits and will not be considered specially.     
+
+\subsection{RF simulation with Qucsator}
+
+Qucsator simulation kernel provides some advanced features for RF circuits analysis. You have to install and configure Qucsator to get access to this simulator. See the section \ref{sec:quick_sw} for more details. It may be required to build Qucsator from source depending on your platform. Please keep in mind that Qucsator has very poor performance in the time domain and is not recommended for simulation of the general purpose circuits. Also Qucsator is not SPICE-compatible and uses another netlist syntax.
+
+But Qucsator supports some advanced RF simulation techniques like multiport S-parameter simulation (including 1-port) and harmonic balance (HB) analysis. Qucsator provides a number of improved models for transmission lines (Fig. \ref{fig:tlines}). The most frequently used transmission lines are listed below: 
+
+\begin{itemize}
+ \item 4-terminal transmission line and twisted pair;
+ \item Coaxial cable;
+ \item Microstrip lines, tees and corners;
+ \item Coupled microstrips;
+ \item Coplanar lines;
+ \item Waveguides;
+ \item Generic RLCG line;
+\end{itemize}
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/tlines.png}
+    \end{center}
+    \caption{Transmission lines models available for Qucsator backend} \label{fig:tlines}
+    \end{figure}
+    
+Let's consider the basics of microstrip circuits simulation. Every microstrip line component requires to attach the substrate. The substrate is represented by special component too (Fig. \ref{fig:subst}). It is possible to define the substrate material properties and microstrip lines thickness. Substrate reference should be specified as the first parameter of all microstrip devices.
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.4\textwidth]{img/substr.png}
+    \end{center}
+    \caption{Substrate properties definition} \label{fig:subst}
+    \end{figure}
+    
+The simulation of the 1.5 GHz coupled microstrip bandpass filter is shown in the Fig. \ref{fig:mlin}. The schematic contains two ports P1 and P2 connected to input and output, two microstrip devices MS1 and MS2, and substrate Subst1. The S-parameter simulation definition has no difference to Ngspice and represented by a special component. The frequency range is defined from 1.3 to 1.7 GHz.  
+
+    \begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/filt_mlin.png}
+    \end{center}
+    \caption{Coupled microstrip bandpass filter simulation} \label{fig:mlin}
+    \end{figure}
+    
+The schematic contains two equation that serves to express the S-parameters in Decibels using \verb|dB()| function. Keep in mind that equation syntax for Qucsator is different. Ngspice equations will not work with Qucsator. The S-parameter is represented in \verb|S[i,j]| form. For example \verb|S[2,1]| for $S_{21}$. Qucsator doesn't calculate Y and Z matrices automatically like Ngspice. You have to use the functions \verb|stoy()| and \verb|stoz()| for matrix conversion. Refer to Qucsator documentation for more details.
     
 \section{Quick switching of the simulation kernel} \label{sec:quick_sw}
 
