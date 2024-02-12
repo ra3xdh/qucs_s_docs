@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage[left=20mm,top=20mm,right=20mm,bottom=20mm]{geometry}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[pdftex]{graphicx}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{gnuplot-lua-tikz}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{soul}
+% \usepackage{lineno}
+\usepackage[ruled,norelsize]{algorithm2e}
+\usepackage{listings}
+
+
+%opening
+\title{Qucs-S: Simulation reference}
+\author{Vadim Kuznetsov}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+%\begin{abstract}
+
+%\end{abstract}
+
+\section{Introduction} \label{sec:intro}
+
+\subsection{Common notes}
+
+Qucs-S was forked from the Qucs cross-platform circuit simulator in 2017. "S" letter indicates SPICE. The purpose of the Qucs-S subproject is to use free SPICE circuit simulation kernels with the Qucs GUI. It merges the power of SPICE and the simplicity of the Qucs GUI. Qucs intentionally uses its own SPICE incompatible simulation kernel Qucsator. It has advanced RF and AC domain simulation features, but most of the existing industrial SPICE models are incompatible with it. Qucs-S is not a simulator by itself, but requires to use a simulation backend with it. The schematic document format of Qucs and Qucs-S are fully compatible. Qucs-S allows to use the following simulation kernels with it:
+
+\begin{itemize}
+ \item  Ngspice is recommended to use. Ngspice is powerful mixed-level/mixed-signal circuit simulator. The most of industrial SPICE models are compatible with Ngspice. It has an excellent performance for time-domain simulation of switching circuits and powerful postprocessor.
+ \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch. 
+ \item SpiceOpus is developed by the Faculty of Electrical Engineering of the Ljubljana University. It based on the SPICE-3f5 code.
+ \item Qucsator as backward compatible and for RF simulation with microwave devices and microstrip lines. Not recommended for general purpose circuits. 
+\end{itemize}
+
+Qucs-S is a cross-platform software and supports a number of Linux distributions alongside with Windows\texttrademark. The Linux packages are generated automatically with the Open Build Service (OBS ) system. Check the official website to get the list of supported distributions. Please keep in mind that the installation packages doesn't provide the simulation kernel. It need to be installed separately. The Ngspice is recommended. For Debian and Ubuntu it is installed automatically as the dependency. Refer to Ngspice website for installation instructions for other platforms.
+
+\subsection{Qucs-S installation guide}
+
+\section{Simulation with SPICE backend}
+
+\subsection{Suppprted backends and quick simulator switching}
+
+\subsection{DC operating point simulation}
+
+\subsection{DC sweep simulation}
+
+\subsection{Transient analysis}
+
+\subsection{Transient analysis using initial conditions}
+
+\subsection{AC analysis}
+
+\subsection{Spectrum anylysis (FFT)}
+
+\subsection{Fourier anylysis}
+
+\subsection{Pole-zero anylysis}
+
+\subsection{Distortion anylysis}
+
+\subsection{Noise anylysis}
+
+\subsection{Parameter sweep}
+
+\subsection{Using tuner mode}
+
+\subsection{Nutmeg script simulation type}
+
+\section{RF simulation}
+
+\subsection{RF (S-parameter) simulation with Ngspice}
+
+\subsection{RF (S-parameter) simulation with Qucsator}
+
+\subsection{Harmonic balance simulation with XYCE}
+
+\subsection{Harmonic balance simulation with Qucsator}
+
+\section{Equations and postprocessing}
+
+\subsection{Using eqautions with Ngspice}
+
+\subsubsection{Parameters}
+
+\subsubsection{Nutmeg equations}
+
+\subsection{Using equations with Qucsator}
+
+\section{Libraries and susbcircuits}
+
+\subsection{Library manager}
+
+\subsection{Creating subcircuits}
+
+\subsection{Creating libraries}
+
+\subsection{Using SPICE models in schematics}
+
+\subsubsection{SPICE modelcrads .MODEL}
+
+\subsubsection{SPICE subcircuits .SUBCKT}
+
+\section{Compact modelling}
+
+\subsection{Using Verilog-A models with Ngspice and OpenVAF}
+
+\subsection{Verilog-A models synthesizer}
+
+\end{document}
+
+
