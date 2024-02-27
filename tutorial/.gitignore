@@ -2,3 +2,6 @@
 *.epub
 *.pdf
 *.html
+
+Gemfile.lock
+/.vscode/settings.json
