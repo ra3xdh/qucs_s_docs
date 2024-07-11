@@ -10,13 +10,15 @@
 \usepackage{gnuplot-lua-tikz}
 \usepackage{tikz}
 \usepackage{amssymb}
-\usepackage{cite}
 \usepackage{hyperref}
 \usepackage{soul}
 % \usepackage{lineno}
 \usepackage[ruled,norelsize]{algorithm2e}
 \usepackage{listings}
-
+\usepackage{subfiles}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{float}
 
 %opening
 \title{Qucs-S: Simulation reference}
@@ -36,6 +38,7 @@
 
 %\end{abstract}
 
+\clearpage
 \section{Introduction} \label{sec:intro}
 
 \subsection{Common notes}
@@ -123,6 +126,19 @@ Qucs-S is a cross-platform software and supports a number of Linux distributions
 
 \subsection{Verilog-A models synthesizer}
 
+\section{Synthesis Tools}
+	\subsection{Filter Design}
+	\subsection{Active Filter Design}
+	\subsection{Matching Network Design}
+	\clearpage
+	\subsection{Attenuator Design}
+		\subfile{sections/tools/attenuator_design/qucs-s-attenuator-main}
+	\clearpage
+	\subsection{Power Combiner / Splitter Design}
+	
+\clearpage
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}
 
 
