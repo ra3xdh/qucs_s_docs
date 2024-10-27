@@ -1,0 +1,53 @@
+\documentclass[oneside]{book}
+\usepackage[T1]{fontenc}
+\usepackage[left=20mm,top=20mm,right=20mm,bottom=20mm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{soul}
+\usepackage{listings}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{float}
+\graphicspath{%
+    {./pictures/}
+    {tutorial/pictures/}
+    {origdocs/pictures/}
+    {ref_guide/tools/attenuator_design/pictures/}
+}
+
+%
+\author{Vadim Kuznetsov et al.}
+\title{QUCS-S Manual}
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+%
+\mainmatter
+%
+\include{tutorial/tutorial.tex}
+%
+\include{ref_guide/ref_guide.tex}
+%
+% move things to appendix, to be reorder (or not) lately
+%
+\appendix
+%
+\include{origdocs/origdocs.tex}
+%
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

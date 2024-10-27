@@ -1,31 +1,8 @@
-\documentclass[a4paper,12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{array}
-\usepackage[left=20mm,top=20mm,right=20mm,bottom=20mm]{geometry}
-\usepackage{tabularx}
-\usepackage{longtable}
-\usepackage[pdftex]{graphicx}
-\usepackage{xcolor}
-\usepackage{textcomp}
-\usepackage{amssymb}
-\usepackage{cite}
-\usepackage{hyperref}
-\usepackage{soul}
-% \usepackage{lineno}
-\usepackage{listings}
-
-
+% settings
 %opening
-\title{Qucs-S: Getting started analog simulation}
-\author{Vadim Kuznetsov}
+\chapter{Qucs-S: Getting started analog simulation}
 
-\begin{document}
-
-\maketitle
-
-%\begin{abstract}
-
-%\end{abstract}
+\hfill\textsl{This chapter is authored by Vadim Kuznetsov}
 
 \section{Introduction} \label{sec:intro}
 
@@ -33,20 +10,20 @@ Qucs-S was forked from the Qucs cross-platform circuit simulator in 2017. "S" le
 
 \begin{itemize}
  \item  Ngspice is recommended to use. Ngspice is powerful mixed-level/mixed-signal circuit simulator. The most of industrial SPICE models are compatible with Ngspice. It has an excellent performance for time-domain simulation of switching circuits and powerful postprocessor.
- \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch. 
+ \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch.
  \item SpiceOpus is developed by the Faculty of Electrical Engineering of the Ljubljana University. It based on the SPICE-3f5 code.
- \item QucsatorRF for RF simulation with microwave devices and microstrip lines. It is not a SPICE compatible simulator. Not recommended for general purpose circuits. 
+ \item QucsatorRF for RF simulation with microwave devices and microstrip lines. It is not a SPICE compatible simulator. Not recommended for general purpose circuits.
 \end{itemize}
 
 Qucs-S is a cross-platform software and supports a number of Linux distributions alongside with Windows\texttrademark. The Linux packages are generated automatically with the Open Build Service (OBS ) system. Check the official website to get the list of supported distributions. Please keep in mind that the installation packages doesn't provide the simulation kernel. It need to be installed separately. The Ngspice is recommended. For Debian and Ubuntu it is installed automatically as the dependency. Refer to Ngspice website for installation instructions for other platforms.
 
 \section{Setup on the first start}
 
-Once the Qucs-S is installed, it asks to select the simulation kernel. Since the version 2.0.0 the application tries to find Ngspice in some usual system locations on the first start. If the Ngspice executable was found automatically the information message will be shown. Otherwise the user will be prompted to configure the simulators manually. The following window (Fig. \ref{fig:sim_setup}) is opened after the first start  of the application. Select the default simulator using the drop-down list and correct the simulator executable paths if necessary. These settings could be corrected later using the \textit{Simulation}\verb|->|\textit{Select default simulator} menu. 
+Once the Qucs-S is installed, it asks to select the simulation kernel. Since the version 2.0.0 the application tries to find Ngspice in some usual system locations on the first start. If the Ngspice executable was found automatically the information message will be shown. Otherwise the user will be prompted to configure the simulators manually. The following window (Fig. \ref{fig:sim_setup}) is opened after the first start  of the application. Select the default simulator using the drop-down list and correct the simulator executable paths if necessary. These settings could be corrected later using the \textit{Simulation}\verb|->|\textit{Select default simulator} menu.
 
 \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.4\textwidth]{img/sim_setup.png}
+    \includegraphics[width=0.4\textwidth]{sim_setup.png}
   \end{center}
   \caption{Simulator setup dialog} \label{fig:sim_setup}
 \end{figure}
@@ -55,29 +32,28 @@ Quick switching of the simulation kernel without application restart is supporte
 
 \section{Main window structure}
 
-
-The Qucs-S main window is shown in the Fig. \ref{fig:mainwin}. The main window consists of two areas: schematic editor (4) on the right side and main dock (1) on the left side. Several schematics could be opened simultaneously. It's possible to switch between the opened schematics using the tabular bar above the schematic editor area.    
+The Qucs-S main window is shown in the Fig. \ref{fig:mainwin}. The main window consists of two areas: schematic editor (4) on the right side and main dock (1) on the left side. Several schematics could be opened simultaneously. It's possible to switch between the opened schematics using the tabular bar above the schematic editor area.
 
 \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=\textwidth]{img/mainwin.png}
+    \includegraphics[width=\textwidth]{mainwin.png}
   \end{center}
   \caption{Qucs-S main window. See text for explanations} \label{fig:mainwin}
 \end{figure}
 
-The dock on the left side has four tabs (3): \emph{Projects}, \emph{Content}, \emph{Components}, and \emph{Libraries}. The \emph{Projects} tab is opened after the application start. It is empty, because there is no projects after the fresh installation. The \emph{Components} tab (see Fig. \ref{fig:mainwin}) contains a list of primitive devices available in Qucs. The components are divided into several categories (lumped devices, nonlinear devices, simulation, etc.). The categories could be selected from the drop-down list (2). The status bar is located on the bottom side of the main window. The active simulation kernel is displayed on the status bar (for example Ngspice on Fig.\ref{fig:mainwin}). 
+The dock on the left side has four tabs (3): \emph{Projects}, \emph{Content}, \emph{Components}, and \emph{Libraries}. The \emph{Projects} tab is opened after the application start. It is empty, because there is no projects after the fresh installation. The \emph{Components} tab (see Fig. \ref{fig:mainwin}) contains a list of primitive devices available in Qucs. The components are divided into several categories (lumped devices, nonlinear devices, simulation, etc.). The categories could be selected from the drop-down list (2). The status bar is located on the bottom side of the main window. The active simulation kernel is displayed on the status bar (for example Ngspice on Fig.\ref{fig:mainwin}).
 
 The toolbar area is located on the top side of the main window below the main menu. Some important buttons are located on the toolbar. They are: \emph{Wire} (6), \emph{Node name} (7), \emph{Ground} (8), and \emph{Marker} (9).
 
 Everything in Qucs-S is considered to be a component. The simulations, equations, and SPICE directives are also special components that could be found in dedicated categories in the component pallet. The diagrams are also special components and could be found in the \emph{diagrams} category in the drop-down list (2).
 
-To place the component on schematic choose desired category from the drop-down list (2) (for example "lumped components") and click on the symbol (for example "Resistor"). Moving the mouse cursor into the working area (4) you are carrying a drawing of a resistor symbol. Pressing the right mouse button rotates the symbol, pressing the left mouse button places the component onto the schematic. 
+To place the component on schematic choose desired category from the drop-down list (2) (for example "lumped components") and click on the symbol (for example "Resistor"). Moving the mouse cursor into the working area (4) you are carrying a drawing of a resistor symbol. Pressing the right mouse button rotates the symbol, pressing the left mouse button places the component onto the schematic.
 
-The components properties could be edited using the properties dialog (Fig. \ref{fig:prop_dlg}) that is called from the context menu of the component or after the left mouse button double click. 
+The components properties could be edited using the properties dialog (Fig. \ref{fig:prop_dlg}) that is called from the context menu of the component or after the left mouse button double click.
 
 \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.45\textwidth]{img/prop_dlg.png}
+    \includegraphics[width=0.45\textwidth]{prop_dlg.png}
   \end{center}
   \caption{Component properties dialog} \label{fig:prop_dlg}
 \end{figure}
@@ -86,113 +62,112 @@ The components properties could be edited using the properties dialog (Fig. \ref
 
 \subsection{AC and transient simulation}
 
-Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic is shown in the Fig. \ref{fig:rc}. Let's perform the AC and transient simulations and plot the magnitude response of the circuit and the waveforms on the input and output nodes. Perform the following steps to draw the schematic and setup the simulation. 
+Let's simulated an RC-circuit using Qucs-S with Ngspice backend. The schematic is shown in the Fig. \ref{fig:rc}. Let's perform the AC and transient simulations and plot the magnitude response of the circuit and the waveforms on the input and output nodes. Perform the following steps to draw the schematic and setup the simulation.
 
 \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=\textwidth]{img/rc.png}
+    \includegraphics[width=\textwidth]{rc.png}
   \end{center}
   \caption{RC-circuit in Qucs-S} \label{fig:rc}
 \end{figure}
 
 
 \begin{itemize}
- \item \textbf{Step 1:} place components on the schematic and set their properties as show in the Fig. \ref{fig:rc}. We need resitor, capacitor (both could be found in the \emph{lumped devices} category) and AC voltage source (from \emph{sources} category). The ground and wires could be taken from the application tool bar (see Fig. \ref{fig:mainwin}) using the buttons (6) and (8). 
- 
- \item \textbf{Step 2:} place simulations on the schematic. We need AC simulation and Transient simulation. Both could be taken from the \emph{simulations} category (see Fig. \ref{fig:rc}). The procedure is same as for usual components. Setup the properties of the simulations as shown in the Fig. \ref{fig:rc}. A special dialog window opens upon the double click on the simulation device (Fig. \ref{fig:dlg_sim}). For AC simulation enter the start (1 Hz) and stop (10 kHz) frequencies and select the logarithmic sweep type. For transient simulation enter the stop time (2 ms) and points number (200 points). 
+ \item \textbf{Step 1:} place components on the schematic and set their properties as show in the Fig. \ref{fig:rc}. We need resitor, capacitor (both could be found in the \emph{lumped devices} category) and AC voltage source (from \emph{sources} category). The ground and wires could be taken from the application tool bar (see Fig. \ref{fig:mainwin}) using the buttons (6) and (8).
+
+ \item \textbf{Step 2:} place simulations on the schematic. We need AC simulation and Transient simulation. Both could be taken from the \emph{simulations} category (see Fig. \ref{fig:rc}). The procedure is same as for usual components. Setup the properties of the simulations as shown in the Fig. \ref{fig:rc}. A special dialog window opens upon the double click on the simulation device (Fig. \ref{fig:dlg_sim}). For AC simulation enter the start (1 Hz) and stop (10 kHz) frequencies and select the logarithmic sweep type. For transient simulation enter the stop time (2 ms) and points number (200 points).
  \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.45\textwidth]{img/dlg_sim.png}
+    \includegraphics[width=0.45\textwidth]{dlg_sim.png}
   \end{center}
   \caption{Simulation properties dialog} \label{fig:dlg_sim}
 \end{figure}
- 
+
  \pagebreak[4]
- 
- \item \textbf{Step 3:} place the node labels \verb|in| and \verb|out| using the button (6) on the toolbar (see Fig. \ref{fig:mainwin}). The node name could be set in a special dialog window (Fig. \ref{fig:nod_lbl}). 
+
+ \item \textbf{Step 3:} place the node labels \verb|in| and \verb|out| using the button (6) on the toolbar (see Fig. \ref{fig:mainwin}). The node name could be set in a special dialog window (Fig. \ref{fig:nod_lbl}).
  \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.4\textwidth]{img/nod_lbl.png}
+    \includegraphics[width=0.4\textwidth]{nod_lbl.png}
   \end{center}
   \caption{Node label setup dialog} \label{fig:nod_lbl}
 \end{figure}
- 
+
  \item \textbf{Step 4:} Place equation for the magnitude response $K=V_{out}/V_{in}$ on the schematic. Equation is the special component called \emph{Nutmeg equation} that could be found in the \emph{spice specific sections} category. The full SPICE syntax for mathematical functions and node names is supported. Refer to Ngspice manual for more details. The simulation should be specified for each Nutmeg equation. We will calculate the magnitude response for the AC simulation only and therefore we need to enter \verb|ac| as the first property for this device as shown on the Fig. \ref{fig:eq}.
   \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.4\textwidth]{img/nutmeg_eq.png}
+    \includegraphics[width=0.4\textwidth]{nutmeg_eq.png}
   \end{center}
   \caption{Equation setup dialog} \label{fig:eq}
 \end{figure}
- 
+
  \item \textbf{Step 5:} Save the schematic document as the file with the \verb|*.sch| extension using the \textit{File} \verb|->| \textit{Save as} menu or press the \verb|Ctrl-S| shortcut. The schematic is ready for the simulation now.
- 
- \item \textbf{Step 6:} simulate the schematic. Press the \textit{Simulation} \verb|->| \textit{Simulate} or press the F2 hotkey on the keyboard. The dialog window containing the simulator log messages will appear shortly (Fig. \ref{fig:sim_dlg}). This dialog window contains the simulation console where the messages from the Ngspice are shown. 
- 
+
+ \item \textbf{Step 6:} simulate the schematic. Press the \textit{Simulation} \verb|->| \textit{Simulate} or press the F2 hotkey on the keyboard. The dialog window containing the simulator log messages will appear shortly (Fig. \ref{fig:sim_dlg}). This dialog window contains the simulation console where the messages from the Ngspice are shown.
+
  It should report that the simulation finished without errors. If you see error messages check your schematic and application settings. After the Ngspice reports about the finished simulation, close this window clicking the \emph{Exit} button. Now the diagrams could be added on schematic field. It is also possible to save the netlist file from this dialog
  .
   \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.4\textwidth]{img/sim_dlg.png}
+    \includegraphics[width=0.4\textwidth]{sim_dlg.png}
   \end{center}
   \caption{Simulation dialog} \label{fig:sim_dlg}
-  
+
 \end{figure}
 
-\item \textbf{Step 7:} place diagrams on the schematic (Fig. \ref{fig:rc_dpl}). We need two cartesian diagrams for magnitude response and transient waveforms. The diagrams are also special components that could be found in the \emph{diagrams} category. The traces could be selected in the special diagram properties dialog (Fig. \ref{fig:diagr_dlg}). Select the \verb|ac.k| traces for one diagram and \verb|tran.v(in)| and \verb|tran.v(out)| traces for another diagram. It is also possible to setup the axis limits and type and the color scheme for the diagram. Select logarithmic X-axis for the magnitude response graph using the settings in the \emph{Properties} tab. The markers could be placed on graphs using the button (9) from the toolbar (Fig. \ref{fig:mainwin}). The position of the marker could be adjiusted using the arrow keys on the keyboard. 
+\item \textbf{Step 7:} place diagrams on the schematic (Fig. \ref{fig:rc_dpl}). We need two cartesian diagrams for magnitude response and transient waveforms. The diagrams are also special components that could be found in the \emph{diagrams} category. The traces could be selected in the special diagram properties dialog (Fig. \ref{fig:diagr_dlg}). Select the \verb|ac.k| traces for one diagram and \verb|tran.v(in)| and \verb|tran.v(out)| traces for another diagram. It is also possible to setup the axis limits and type and the color scheme for the diagram. Select logarithmic X-axis for the magnitude response graph using the settings in the \emph{Properties} tab. The markers could be placed on graphs using the button (9) from the toolbar (Fig. \ref{fig:mainwin}). The position of the marker could be adjiusted using the arrow keys on the keyboard.
 
   \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=\textwidth]{img/rc_dpl.png}
+    \includegraphics[width=\textwidth]{rc_dpl.png}
   \end{center}
   \caption{Schematic with two diagrams added} \label{fig:rc_dpl}
   \end{figure}
-  
+
     \begin{figure}[!ht]
   \begin{center}
-    \includegraphics[width=0.4\textwidth]{img/diagr_dlg.png}
+    \includegraphics[width=0.4\textwidth]{diagr_dlg.png}
   \end{center}
   \caption{Diagram properties dialog} \label{fig:diagr_dlg}
   \end{figure}
-  
-\end{itemize}
 
+\end{itemize}
 
 \subsection{DC analysis} \label{sec:dc}
 
-Qucs-S unlike Qucs has no special DC simulation mode. If only \emph{DC 
-simulation} component is placed on the schematic no simulation will be launched 
-and error message will be shown. This component is kept for backward 
+Qucs-S unlike Qucs has no special DC simulation mode. If only \emph{DC
+simulation} component is placed on the schematic no simulation will be launched
+and error message will be shown. This component is kept for backward
 compatibility with old Qucs schematics.
 
 But there exists two modes of the DC simulation:
 
 \begin{itemize}
- \item Show operating point directly on the circuit. This mode is activted when 
-pressing F8 keyboard shortcut or using \emph{Simulation->Show bias} menu 
+ \item Show operating point directly on the circuit. This mode is activted when
+pressing F8 keyboard shortcut or using \emph{Simulation->Show bias} menu
 entry. See the Fig. \ref{fig:rdiv_f8} for example of such simulation.
- \item DC sweep mode. You need to insert \emph{Parameter sweep} simulation 
-component and attach it to the DC simulation. This simulation mode could be 
-used for plotting IV-curves or getting table output. See the Fig. 
-\ref{fig:rdiv_dc} for example of this simulation. 
+ \item DC sweep mode. You need to insert \emph{Parameter sweep} simulation
+component and attach it to the DC simulation. This simulation mode could be
+used for plotting IV-curves or getting table output. See the Fig.
+\ref{fig:rdiv_dc} for example of this simulation.
 \end{itemize}
 
 
 \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/rdiv_f8.png}
+        \includegraphics[width=0.8\textwidth]{rdiv_f8.png}
     \end{center}
-    \caption{Operating point simulation of the voltage divider} 
+    \caption{Operating point simulation of the voltage divider}
 \label{fig:rdiv_f8}
 \end{figure}
 
 
 \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/rdiv_dc.png}
+        \includegraphics[width=0.8\textwidth]{rdiv_dc.png}
     \end{center}
-    \caption{Using DC sweep to get table output of the resistive divider 
-voltage} 
+    \caption{Using DC sweep to get table output of the resistive divider
+voltage}
 \label{fig:rdiv_dc}
 \end{figure}
 
@@ -202,67 +177,67 @@ voltage}
 
 Parameter sweep is defined as the special simulation type that is attached to any other simulation. Let's consider an example
 and attach parameter sweep to the circuit shown in the Figure \ref{fig:rc}. We will see the influence of the resistance of
-the RC-circuit on the cutoff frequency. 
+the RC-circuit on the cutoff frequency.
 
-\textbf{Important note:} unlike Qucs before version 0.0.20, Qucs-S doesn't support the sweep of variables directly. Legacy Qucs schematics using variable sweep will not work. Parameter sweep supports only device sweep. Resistor, capacitor or source are accepted.  
+\textbf{Important note:} unlike Qucs before version 0.0.20, Qucs-S doesn't support the sweep of variables directly. Legacy Qucs schematics using variable sweep will not work. Parameter sweep supports only device sweep. Resistor, capacitor or source are accepted.
 
 Perform the following steps to add parameter sweep:
 
 \begin{itemize}
- \item \textbf{Step 1:} Place parameter sweep component on the schematic sheet (Figure \ref{fig:rc_parsw}). 
- The \emph{Parameter sweep} device could be found in the \emph{simulations} group. 
- 
+ \item \textbf{Step 1:} Place parameter sweep component on the schematic sheet (Figure \ref{fig:rc_parsw}).
+ The \emph{Parameter sweep} device could be found in the \emph{simulations} group.
+
     \begin{figure}[!ht]
         \begin{center}
-            \includegraphics[width=0.8\textwidth]{img/rc_parsw.png}
+            \includegraphics[width=0.8\textwidth]{rc_parsw.png}
         \end{center}
-        \caption{Adding parameter sweep on the schematic} 
+        \caption{Adding parameter sweep on the schematic}
     \label{fig:rc_parsw}
     \end{figure}
 
-\item \textbf{Step 2:} Set the properties of the parameter sweep simulation. After the double click the dialog window will be 
-opened (Figure \ref{fig:parsw}). The \emph{Simulation} drop-down list is the the name of simulation component to which the parameter sweep is attached. For our example we need to select the \verb|AC1| simulation from the drop-down list, because we attaching the parameter sweep to the AC simulation. The \emph{Sweep parameter} input field is the \textbf{device} name. Variables or other objects 
-name are not acceptable here! Enter the \verb|R1| device name here. The \emph{Start}, \emph{Stop}, \emph{Step}, and \emph{Number} input fields serve for the definition of the sweep range. We will sweep the \verb|R1| value from 1 kOhm to 5 kOhm and take 4 sweep points. 
+\item \textbf{Step 2:} Set the properties of the parameter sweep simulation. After the double click the dialog window will be
+opened (Figure \ref{fig:parsw}). The \emph{Simulation} drop-down list is the the name of simulation component to which the parameter sweep is attached. For our example we need to select the \verb|AC1| simulation from the drop-down list, because we attaching the parameter sweep to the AC simulation. The \emph{Sweep parameter} input field is the \textbf{device} name. Variables or other objects
+name are not acceptable here! Enter the \verb|R1| device name here. The \emph{Start}, \emph{Stop}, \emph{Step}, and \emph{Number} input fields serve for the definition of the sweep range. We will sweep the \verb|R1| value from 1 kOhm to 5 kOhm and take 4 sweep points.
 
     \begin{figure}[!ht]
         \begin{center}
-            \includegraphics[width=0.5\textwidth]{img/parsw_dlg.png}
+            \includegraphics[width=0.5\textwidth]{parsw_dlg.png}
         \end{center}
-        \caption{Setting parameter sweep properties} 
+        \caption{Setting parameter sweep properties}
     \label{fig:parsw}
     \end{figure}
-    
-\item \textbf{Step 3:} Run the simulation and place the diagrams as for usual simulation (Figure \ref{fig:parsw_mr}). You should see the family of the curves. You may place a marker on the diagram and move it between the sweep curves with \emph{Arrow Up} and \emph{Arrow Down} keys.  
-    
+
+\item \textbf{Step 3:} Run the simulation and place the diagrams as for usual simulation (Figure \ref{fig:parsw_mr}). You should see the family of the curves. You may place a marker on the diagram and move it between the sweep curves with \emph{Arrow Up} and \emph{Arrow Down} keys.
+
         \begin{figure}[!ht]
         \begin{center}
-            \includegraphics[width=0.8\textwidth]{img/parsw_mr.png}
+            \includegraphics[width=0.8\textwidth]{parsw_mr.png}
         \end{center}
-        \caption{Magnitude response of the RC-circuit with the parameter sweep} 
+        \caption{Magnitude response of the RC-circuit with the parameter sweep}
     \label{fig:parsw_mr}
     \end{figure}
-    
+
 \end{itemize}
 
 
 \subsection{DC sweep}
 
 DC sweep simulation takes place when parameter sweep is attached to the DC simulation. Such simulation mode is explained in
-the Section \ref{sec:dc}. DC sweep only accepts device name (resistor or source) as the sweep parameter name. The DC sweep with variable name will not work. This simulation mode usually serves for obtaining the IV-curves. 
+the Section \ref{sec:dc}. DC sweep only accepts device name (resistor or source) as the sweep parameter name. The DC sweep with variable name will not work. This simulation mode usually serves for obtaining the IV-curves.
 
 \subsection{Variable sweep}
 
-The recent version of the Ngspice support sweeping of the varibles. The variable should be defined using the \verb|.PARAM| 
+The recent version of the Ngspice support sweeping of the varibles. The variable should be defined using the \verb|.PARAM|
 statement (available at the \emph{SPICE specific sections} group). Qucs-S doesn't create the variable automatically. Refer to the schematic shown in the Figure \ref{fig:rc_parsw_var} for the example of such simulation mode.
 
         \begin{figure}[!ht]
         \begin{center}
-            \includegraphics[width=0.8\textwidth]{img/rc_parsw_var.png}
+            \includegraphics[width=0.8\textwidth]{rc_parsw_var.png}
         \end{center}
-        \caption{Magnitude response of the RC-circuit with the parameter sweep} 
+        \caption{Magnitude response of the RC-circuit with the parameter sweep}
     \label{fig:rc_parsw_var}
     \end{figure}
-    
+
 \section{Digital simulation}
 
 \subsection{Digital devices with analog model}
@@ -279,7 +254,7 @@ The usage of these devices in analog simulation mode has no special requirements
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/logic_gen.png}
+        \includegraphics[width=0.8\textwidth]{logic_gen.png}
     \end{center}
     \caption{Oscillator example using logic gates} \label{fig:logic_gen}
     \end{figure}
@@ -295,14 +270,14 @@ The most of digital components except of the listed in the previous section does
 \end{itemize}
 
 
-Place on the schematic field a special device named \emph{Digital simulation} to switch Qucs-S to digital mode. Verilog or VHDL backend will be started automatically instead of SPICE if digital simulation is found in the schematic. User doesn't need to switch 
-Qucs-S to the digital mode in the application settings. 
+Place on the schematic field a special device named \emph{Digital simulation} to switch Qucs-S to digital mode. Verilog or VHDL backend will be started automatically instead of SPICE if digital simulation is found in the schematic. User doesn't need to switch
+Qucs-S to the digital mode in the application settings.
 
-There are two modes of the digital simulation: truth table and timing diagram. An example of the digital simulation of the 2-bit decoder/demultiplexer is shown in the Figure \ref{fig:demux}. This simulation uses Verilog and timing diagram mode. 
+There are two modes of the digital simulation: truth table and timing diagram. An example of the digital simulation of the 2-bit decoder/demultiplexer is shown in the Figure \ref{fig:demux}. This simulation uses Verilog and timing diagram mode.
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/demux.png}
+        \includegraphics[width=0.8\textwidth]{demux.png}
     \end{center}
     \caption{Simulation of the digital circuit with iverilog} \label{fig:demux}
     \end{figure}
@@ -312,28 +287,28 @@ There are two modes of the digital simulation: truth table and timing diagram. A
 
 Since the version v2.1.0 Qucs-S support the tuning simulation mode. The tuner allows to adjust the component property values using an interactive sliders and immediately see the result on diagrams. Tuning mode is supported for all simulation kernels including Ngspice and Qucsator. Tuner may act as an interactive alternative of the parameter sweep simulation.
 
-Let's consider how to use the tuning mode for the RC-circuit Fig. \ref{fig:rc}. The schematic is required to have the simulations and diagrams placed on schematic. The tuner will not work without defined simulations and diagrams. The tuner is activated using the \emph{Simulation->Tune} menu or F3 keyboard shortcut. The following dialog window (Fig. \ref{fig:tuner_dlg}) is shown after the activation. Then user need to click on the device or the device property with the left mouse button. A new slider will be added to the tuner window. It is possible to manually set the upper and lower limit of the tuned device property. The default limits are within the $\pm15\%$ range from the starting value.  
+Let's consider how to use the tuning mode for the RC-circuit Fig. \ref{fig:rc}. The schematic is required to have the simulations and diagrams placed on schematic. The tuner will not work without defined simulations and diagrams. The tuner is activated using the \emph{Simulation->Tune} menu or F3 keyboard shortcut. The following dialog window (Fig. \ref{fig:tuner_dlg}) is shown after the activation. Then user need to click on the device or the device property with the left mouse button. A new slider will be added to the tuner window. It is possible to manually set the upper and lower limit of the tuned device property. The default limits are within the $\pm15\%$ range from the starting value.
 
 
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.3\textwidth]{img/tuner_dlg.png}
+        \includegraphics[width=0.3\textwidth]{tuner_dlg.png}
     \end{center}
     \caption{Tuner dialog window} \label{fig:tuner_dlg}
     \end{figure}
-    
-After the sliders are added to the tuner window it is possible to drag the sliders and observe the changes on the diagrams. For example we can see the cutoff frequency of the RC-circuit is increasing when C is decreasing. If the tuner window is closed the user will be prompted to update or revert the components values on schematic. 
+
+After the sliders are added to the tuner window it is possible to drag the sliders and observe the changes on the diagrams. For example we can see the cutoff frequency of the RC-circuit is increasing when C is decreasing. If the tuner window is closed the user will be prompted to update or revert the components values on schematic.
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=\textwidth]{img/tuner_rc.png}
+        \includegraphics[width=\textwidth]{tuner_rc.png}
     \end{center}
     \caption{Tuning of the RC-circuit} \label{fig:tuner_rc}
     \end{figure}
-    
-    
-\section{SPICE models usage} 
+
+
+\section{SPICE models usage}
 
 \subsection{Importing SPICE modelcards}
 
@@ -359,16 +334,16 @@ The devices mentioned above could be found in group \emph{nonlinear components} 
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.4\textwidth]{img/import_modelcard.png}
+        \includegraphics[width=0.4\textwidth]{import_modelcard.png}
     \end{center}
     \caption{Importing SPICE diode modelcard} \label{fig:spice_import}
     \end{figure}
 
-The \emph{Convert number notation} checkbox enables numbers conversion to Qucs-S compatible form. Subcircuit type SPICE models cannot be imported this way. 
+The \emph{Convert number notation} checkbox enables numbers conversion to Qucs-S compatible form. Subcircuit type SPICE models cannot be imported this way.
 
 \subsection{Importing SPICE subcircuit devices}
 
-Complex semiconductor devices like analog and digital ICs are defined as SPICE subcircuit models. This model starts with \verb|.SUBCKT| directive. The listing below shows an example of such model for LM358 operational amplifier. Subcircuits are often collected in SPICE libraries. 
+Complex semiconductor devices like analog and digital ICs are defined as SPICE subcircuit models. This model starts with \verb|.SUBCKT| directive. The listing below shows an example of such model for LM358 operational amplifier. Subcircuits are often collected in SPICE libraries.
 
 \begin{verbatim}
 *LM358 DUAL OPERATIONAL AMPLIFIER MACRO-MODEL
@@ -416,7 +391,7 @@ R12 98 15 1MEG
 C5 98 15 7.9577E-14
 *********COMMON-MODE ZERO STAGE*********
 *Fpcm=10 KHz
-G4 98 16 3 49 5.6234E-8               
+G4 98 16 3 49 5.6234E-8
 L2 98 17 15.9M
 R13 17 16 1K
 **************OUTPUT STAGE**************
@@ -441,38 +416,38 @@ RL3 22 28 100K
 .ENDS
 \end{verbatim}
 
-Qucs-S provides a special \emph{Spice library device} component to use SPICE subcircuits in schematics. This component could be found at the \emph{File components} group in the left panel. Place the \emph{Spice library device} and enter its properties with the double click or context menu. The following dialog window (Figure \ref{fig:splibcomp}) will be opened.  
+Qucs-S provides a special \emph{Spice library device} component to use SPICE subcircuits in schematics. This component could be found at the \emph{File components} group in the left panel. Place the \emph{Spice library device} and enter its properties with the double click or context menu. The following dialog window (Figure \ref{fig:splibcomp}) will be opened.
 
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.9\textwidth]{img/splibcomp.png}
+        \includegraphics[width=0.9\textwidth]{splibcomp.png}
     \end{center}
     \caption{SPICE library device properties} \label{fig:splibcomp}
     \end{figure}
-    
+
 This dialog has a number of input fields and other input controls. Perform the following steps to setup the SPICE device properties.
 
 \begin{enumerate}
  \item Specify the path to SPICE library file containing the subcircuit type model using the \emph{SPICE library} input field;
- \item Select SPICE model to use from the \emph{Subcircuit} drop-down list. The Qucs-S parses the specified library file and fills all found \verb|.SUBCKT| entries in this drop-down list. 
+ \item Select SPICE model to use from the \emph{Subcircuit} drop-down list. The Qucs-S parses the specified library file and fills all found \verb|.SUBCKT| entries in this drop-down list.
  \item Select symbol for the SPICE device. Three options are available. Automatic symbol creates a rectangular symbol. Symbol from template could be selected from the list in the right side of the dialog window. The Qucs-S contains a set of symbol templates for the most common ICs and discrete devices. Also you can draw a user symbol and specify it using the \emph{Symbol from file} option. The symbol file should be saved as \verb|*.sym| and could be created using \emph{File->New symbol} in main menu.
- \item Assign symbol pin to every subcircuit pin using the table in the left part of the dialog window. The \verb|NC| in the table cells indicates that the pins are not assigned yet. All device pins must be assigned. The symbol preview in the right part of the window shows the symbol pins numbers.  
+ \item Assign symbol pin to every subcircuit pin using the table in the left part of the dialog window. The \verb|NC| in the table cells indicates that the pins are not assigned yet. All device pins must be assigned. The symbol preview in the right part of the window shows the symbol pins numbers.
 \end{enumerate}
 
-After the device and symbol are selected and pins are assigned press the OK button. The \emph{Spice Library Device} is ready for the simulation. Please keep in mind that Qucs-S doesn't embed the SPICE code in the schematic and this file device is still referencing the SPICE library file. You have to distribute the SPICE library with the schematic. Some SPICE models distributed by IC vendors may require Ngspice compatibility options setting like PSPICE/LTspice compatibility. Refer to the model description before using with Qucs-S. 
-    
+After the device and symbol are selected and pins are assigned press the OK button. The \emph{Spice Library Device} is ready for the simulation. Please keep in mind that Qucs-S doesn't embed the SPICE code in the schematic and this file device is still referencing the SPICE library file. You have to distribute the SPICE library with the schematic. Some SPICE models distributed by IC vendors may require Ngspice compatibility options setting like PSPICE/LTspice compatibility. Refer to the model description before using with Qucs-S.
+
 \section{RF simulation}
 
 \subsection{Common notes on RF circuits analysis}
 
-RF circuits are often described by the scattering matrix (S-parameters). Many electrical properties of networks of components (inductors, capacitors, resistors) may be expressed using S-parameters, such as gain, return loss, voltage standing wave ratio (VSWR), reflection coefficient and amplifier stability. It is possible to convert the S-parameters to the Y or Z-matrix to estimate the input and output impedances of the circuit. 
+RF circuits are often described by the scattering matrix (S-parameters). Many electrical properties of networks of components (inductors, capacitors, resistors) may be expressed using S-parameters, such as gain, return loss, voltage standing wave ratio (VSWR), reflection coefficient and amplifier stability. It is possible to convert the S-parameters to the Y or Z-matrix to estimate the input and output impedances of the circuit.
 
 The S-parameters of the two-port circuit have the following meaning:
 
 \begin{itemize}
  \item $S_{11}=\Gamma_1$ input reflection coefficient; if $S_{11}=0$ the circuit is ideally matched without reflection;
- \item $S_{21}$ forward power gain $G_p$ from input (port 1) to output (port 2). For passive circuits always $G_p<1$; 
+ \item $S_{21}$ forward power gain $G_p$ from input (port 1) to output (port 2). For passive circuits always $G_p<1$;
  \item $S_{12}$ reverse power gain from output to input.
  \item $S_{22}=\Gamma_2$ output reflection coefficient;
 \end{itemize}
@@ -485,37 +460,37 @@ The VSWR and reflection coefficients are related as the following:
 
 \subsection{RF simulation with Ngspice}
 
-Ngspice supports the S-parameter simulation since the version 37. Make sure that your Ngspice package has the version above 37. Otherwise this simulation mode will not work. There exists a special S-parameter simulation component that should be placed on schematic. The input and output ports of the circuit are represented by \emph{power source} component (Fig. \ref{fig:port50}). 
+Ngspice supports the S-parameter simulation since the version 37. Make sure that your Ngspice package has the version above 37. Otherwise this simulation mode will not work. There exists a special S-parameter simulation component that should be placed on schematic. The input and output ports of the circuit are represented by \emph{power source} component (Fig. \ref{fig:port50}).
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.2\textwidth]{img/port50.png}
+        \includegraphics[width=0.2\textwidth]{port50.png}
     \end{center}
     \caption{The power source representing 50-ohm port} \label{fig:port50}
     \end{figure}
-    
-The parameters of this device are port number \verb|Num|, frequency $f$, and source power $P$ expressed in dBm. Two such sources should be connected to schematic input and output nodes respectively. 
 
-Let's consider an example and simulate the frequency response of the bandpass filter for the 20m hamradio band. The schematic is shown in the Fig. \ref{fig:filt20m}. 
+The parameters of this device are port number \verb|Num|, frequency $f$, and source power $P$ expressed in dBm. Two such sources should be connected to schematic input and output nodes respectively.
+
+Let's consider an example and simulate the frequency response of the bandpass filter for the 20m hamradio band. The schematic is shown in the Fig. \ref{fig:filt20m}.
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=\textwidth]{img/filt20sim.png}
+        \includegraphics[width=\textwidth]{filt20sim.png}
     \end{center}
     \caption{The simulation of the band-pass filter with Qucs-S and Ngspice} \label{fig:filt20m}
     \end{figure}
-    
-The filter consists of LC-devices that could be found in the \emph{lumped devices} group. The filter schematic contains two 50-ohm port sources connected to its input and output nodes (\verb|in| and \verb|out|). The \emph{S-parameter simulation} component defines the frequency sweep range from 6 MHz to 20 MHz.
-    
-The simulation of the filter circuit could be launched as usual using the F2 keyboard shortcut. After the simulation has been finished a number of diagrams could be placed on schematic. Ngspice represents the S-parameter simulation data as the virtual voltages.For example, it's need to pick the \verb|v(s_2_1)| variable to plot the $S_{21}$ dependency. The cartesian diagram contains the $S_{11}$ and $S_{21}$ dependencies. The $S_{21}$ is the magnitude response of the filter. The same dependencies could plot on a Smith chart. Qucs-S provides a number of diagrams that could be used for RF circuits analysis. These diagrams are: Smith chart, admittance Smith chart, polar complex plane, and combined Smith chart and complex plane. 
 
-Ngspice converts the S-matrix to Y- and Z-matrix automatically. The Y and Z-parameters frequency dependencies could be plotted after the simulation. The Y and Z parameters are slow represented as the virtual voltages by Ngspice. For example the \verb|v(z_1_1)| variable will represent the $Z_{11}$ parameter. The simulation of the active RF circuits (like amplifiers) could be done similar to the passive circuits and will not be considered specially.     
+The filter consists of LC-devices that could be found in the \emph{lumped devices} group. The filter schematic contains two 50-ohm port sources connected to its input and output nodes (\verb|in| and \verb|out|). The \emph{S-parameter simulation} component defines the frequency sweep range from 6 MHz to 20 MHz.
+
+The simulation of the filter circuit could be launched as usual using the F2 keyboard shortcut. After the simulation has been finished a number of diagrams could be placed on schematic. Ngspice represents the S-parameter simulation data as the virtual voltages.For example, it's need to pick the \verb|v(s_2_1)| variable to plot the $S_{21}$ dependency. The cartesian diagram contains the $S_{11}$ and $S_{21}$ dependencies. The $S_{21}$ is the magnitude response of the filter. The same dependencies could plot on a Smith chart. Qucs-S provides a number of diagrams that could be used for RF circuits analysis. These diagrams are: Smith chart, admittance Smith chart, polar complex plane, and combined Smith chart and complex plane.
+
+Ngspice converts the S-matrix to Y- and Z-matrix automatically. The Y and Z-parameters frequency dependencies could be plotted after the simulation. The Y and Z parameters are slow represented as the virtual voltages by Ngspice. For example the \verb|v(z_1_1)| variable will represent the $Z_{11}$ parameter. The simulation of the active RF circuits (like amplifiers) could be done similar to the passive circuits and will not be considered specially.
 
 \subsection{RF simulation with Qucsator/QucsatorRF}
 
 Qucsator simulation kernel provides some advanced features for RF circuits analysis. Since the version v24.2.0 no manual installation of Qucsator is needed. The QucsatorRF simulation kernel is part of Qucs-S distribution and is shipped with the main application. See the section \ref{sec:quick_sw} for more details. Please keep in mind that Qucsator has very poor performance in the time domain and is not recommended for simulation of the general purpose circuits. Also Qucsator is not SPICE-compatible and uses another netlist syntax.
 
-But Qucsator supports some advanced RF simulation techniques like multiport S-parameter simulation (including 1-port) and harmonic balance (HB) analysis. Qucsator provides a number of improved models for transmission lines (Fig. \ref{fig:tlines}). The most frequently used transmission lines are listed below: 
+But Qucsator supports some advanced RF simulation techniques like multiport S-parameter simulation (including 1-port) and harmonic balance (HB) analysis. Qucsator provides a number of improved models for transmission lines (Fig. \ref{fig:tlines}). The most frequently used transmission lines are listed below:
 
 \begin{itemize}
  \item 4-terminal transmission line and twisted pair;
@@ -529,53 +504,53 @@ But Qucsator supports some advanced RF simulation techniques like multiport S-pa
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=\textwidth]{img/tlines.png}
+        \includegraphics[width=\textwidth]{tlines.png}
     \end{center}
     \caption{Transmission lines models available for Qucsator backend} \label{fig:tlines}
     \end{figure}
-    
+
 Let's consider the basics of microstrip circuits simulation. Every microstrip line component requires to attach the substrate. The substrate is represented by special component too (Fig. \ref{fig:subst}). It is possible to define the substrate material properties and microstrip lines thickness. Substrate reference should be specified as the first parameter of all microstrip devices.
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.4\textwidth]{img/substr.png}
+        \includegraphics[width=0.4\textwidth]{substr.png}
     \end{center}
     \caption{Substrate properties definition} \label{fig:subst}
     \end{figure}
-    
-The simulation of the 1.5 GHz coupled microstrip bandpass filter is shown in the Fig. \ref{fig:mlin}. The schematic contains two ports P1 and P2 connected to input and output, two microstrip devices MS1 and MS2, and substrate Subst1. The S-parameter simulation definition has no difference to Ngspice and represented by a special component. The frequency range is defined from 1.3 to 1.7 GHz.  
+
+The simulation of the 1.5 GHz coupled microstrip bandpass filter is shown in the Fig. \ref{fig:mlin}. The schematic contains two ports P1 and P2 connected to input and output, two microstrip devices MS1 and MS2, and substrate Subst1. The S-parameter simulation definition has no difference to Ngspice and represented by a special component. The frequency range is defined from 1.3 to 1.7 GHz.
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/filt_mlin.png}
+        \includegraphics[width=0.8\textwidth]{filt_mlin.png}
     \end{center}
     \caption{Coupled microstrip bandpass filter simulation} \label{fig:mlin}
     \end{figure}
-    
+
 The schematic contains two equation that serves to express the S-parameters in Decibels using \verb|dB()| function. Keep in mind that equation syntax for Qucsator is different. Ngspice equations will not work with Qucsator. The S-parameter is represented in \verb|S[i,j]| form. For example \verb|S[2,1]| for $S_{21}$. Qucsator doesn't calculate Y and Z matrices automatically like Ngspice. You have to use the functions \verb|stoy()| and \verb|stoz()| for matrix conversion. Refer to Qucsator documentation for more details.
-    
+
 \section{Quick switching of the simulation kernel} \label{sec:quick_sw}
 
 \subsection{Quick simulator selection}
 
 Qucs-S supports a quick switching of the simulation kernel since the version 2.0.0. Application restart is not required anymore to apply this setting. The simulator could be selected at any time using the drop-down list on the toolbar Figure \ref{fig:sim_switch}. The simulator location must be configure using the application settings dialog Figure \ref{fig:sim_setup} and the specified simulator executable binary must exist. Otherwise the simulator will be not shown in the drop-down list on the toolbar and not available for selection. The list of the supported simulation kernels could be found in the section \ref{sec:intro}.
 
-Also keep in mind that Qucs-S distribution doesn't provide any simulation kernels and simulators must be installed separately. If you are using Linux DEB package, the Ngspice will be installed automatically as the package dependency. This selection affects only analog simulation. The digital simulation kernel will be executed automatically if the schematic contains the digital simulation (see the section \ref{sec:digi}).  
+Also keep in mind that Qucs-S distribution doesn't provide any simulation kernels and simulators must be installed separately. If you are using Linux DEB package, the Ngspice will be installed automatically as the package dependency. This selection affects only analog simulation. The digital simulation kernel will be executed automatically if the schematic contains the digital simulation (see the section \ref{sec:digi}).
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.66\textwidth]{img/sim_switch.png}
+        \includegraphics[width=0.66\textwidth]{sim_switch.png}
     \end{center}
     \caption{Simulator choose drop-down list} \label{fig:sim_switch}
     \end{figure}
 
 \subsection{Incompatible components}
-    
+
 Some of devices may be incompatible with the selected simulation kernel. For example, microstrip lines are designed for Qucsator and are not available with Ngspice. Such devices will be not available for insertion in the schematic and will be grayed out (see Figure \ref{fig:grey}) on the schematic view. An appropriate warning will be shown if the user tries to simulate the schematic containing incompatible devices.
 
     \begin{figure}[!ht]
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{img/ms_grey.png}
+        \includegraphics[width=0.8\textwidth]{ms_grey.png}
     \end{center}
     \caption{Schematic containing incompatible devices} \label{fig:grey}
     \end{figure}
@@ -599,7 +574,7 @@ imag & The imaginary part of vector\\
 conj & The complex conjugate of a vector \\
 db & Decibels $20 \log_{10}()$ of the vector \\
 abs & The absolute value of vector (same as mag) \\
-integ & Integrates over the given vector (versus the real component of the scale vector) \\ 
+integ & Integrates over the given vector (versus the real component of the scale vector) \\
 deriv & Calculates the derivative of the given vector \\
 vecd & Compute the differential of a vector \\
 group\_delay & Calculates the group delay $-d\phi/d\omega$ \\
@@ -607,15 +582,12 @@ group\_delay & Calculates the group delay $-d\phi/d\omega$ \\
 \end{tabularx}
 \end{table}
 
-
-
-
 \section{Conclusion}
 
-In this tutorial it was considered how to perform a first start setup of the Qucs-S with the Ngspice backend and make an AC and Transient simulation of the simple RC circuit. It was shown how to add postprocessor equations and waveforms plot. Refer to official Qucs-S and Ngspice documentation to learn more advanced simulation techniques. 
+In this tutorial it was considered how to perform a first start setup of the Qucs-S with the Ngspice backend and make an AC and Transient simulation of the simple RC circuit. It was shown how to add postprocessor equations and waveforms plot. Refer to official Qucs-S and Ngspice documentation to learn more advanced simulation techniques.
+
+\endinput
 
 
-
-\end{document}
 
 
