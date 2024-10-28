@@ -1,45 +1,37 @@
-\documentclass[a4paper,12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{array}
-\usepackage[left=20mm,top=20mm,right=20mm,bottom=20mm]{geometry}
-\usepackage{tabularx}
-\usepackage{longtable}
-\usepackage[pdftex]{graphicx}
-\usepackage{xcolor}
-\usepackage{textcomp}
-\usepackage{gnuplot-lua-tikz}
-\usepackage{tikz}
-\usepackage{amssymb}
-\usepackage{hyperref}
-\usepackage{soul}
-% \usepackage{lineno}
-\usepackage[ruled,norelsize]{algorithm2e}
-\usepackage{listings}
-\usepackage{subfiles}
-\usepackage{cite}
-\usepackage{amsmath}
-\usepackage{float}
+%\documentclass[a4paper,12pt]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage{array}
+%\usepackage[left=20mm,top=20mm,right=20mm,bottom=20mm]{geometry}
+%\usepackage{tabularx}
+%\usepackage{longtable}
+%\usepackage[pdftex]{graphicx}
+%\usepackage{xcolor}
+%\usepackage{textcomp}
+%\usepackage{gnuplot-lua-tikz}
+%\usepackage{tikz}
+%\usepackage{amssymb}
+%\usepackage{hyperref}
+%\usepackage{soul}
+%% \usepackage{lineno}
+%\usepackage[ruled,norelsize]{algorithm2e}
+%\usepackage{listings}
+%\usepackage{subfiles}
+%\usepackage{cite}
+%\usepackage{amsmath}
+%\usepackage{float}
 
-%opening
-\title{Qucs-S: Simulation reference}
-\author{Vadim Kuznetsov}
+%%opening
+\chapter{Qucs-S: Simulation reference}
+\hfill\textsl{This chapter is authored by Vadim Kuznetsov}
 
-\begin{document}
 
-\maketitle
-
-\tableofcontents
-
-\listoffigures
-
-\listoftables
 
 %\begin{abstract}
 
 %\end{abstract}
 
 \clearpage
-\section{Introduction} \label{sec:intro}
+\section{Introduction} \label{sec:refguide:intro}
 
 \subsection{Common notes}
 
@@ -47,9 +39,9 @@ Qucs-S was forked from the Qucs cross-platform circuit simulator in 2017. "S" le
 
 \begin{itemize}
  \item  Ngspice is recommended to use. Ngspice is powerful mixed-level/mixed-signal circuit simulator. The most of industrial SPICE models are compatible with Ngspice. It has an excellent performance for time-domain simulation of switching circuits and powerful postprocessor.
- \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch. 
+ \item XYCE is a new SPICE-compatible circuit simulator written by Sandia from the scratch.
  \item SpiceOpus is developed by the Faculty of Electrical Engineering of the Ljubljana University. It based on the SPICE-3f5 code.
- \item Qucsator as backward compatible and for RF simulation with microwave devices and microstrip lines. Not recommended for general purpose circuits. 
+ \item Qucsator as backward compatible and for RF simulation with microwave devices and microstrip lines. Not recommended for general purpose circuits.
 \end{itemize}
 
 Qucs-S is a cross-platform software and supports a number of Linux distributions alongside with Windows\texttrademark. The Linux packages are generated automatically with the Open Build Service (OBS ) system. Check the official website to get the list of supported distributions. Please keep in mind that the installation packages doesn't provide the simulation kernel. It need to be installed separately. The Ngspice is recommended. For Debian and Ubuntu it is installed automatically as the dependency. Refer to Ngspice website for installation instructions for other platforms.
@@ -132,13 +124,11 @@ Qucs-S is a cross-platform software and supports a number of Linux distributions
 	\subsection{Matching Network Design}
 	\clearpage
 	\subsection{Attenuator Design}
-		\subfile{sections/tools/attenuator_design/qucs-s-attenuator-main}
+		\input{ref_guide/tools/attenuator_design/attenuator_design.tex}
 	\clearpage
 	\subsection{Power Combiner / Splitter Design}
-	
+
 \clearpage
-\bibliographystyle{plain}
-\bibliography{references}
-\end{document}
+\endinput
 
 
