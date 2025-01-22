@@ -37,5 +37,6 @@ main-en.pdf
 *.pgf
 *.tuc
 *.fls
+*-eps-converted-to.pdf
 ls-R
 tds/
