@@ -230,13 +230,30 @@ the Section \ref{sec:dc}. DC sweep only accepts device name (resistor or source)
 The recent version of the Ngspice support sweeping of the varibles. The variable should be defined using the \verb|.PARAM|
 statement (available at the \emph{SPICE specific sections} group). Qucs-S doesn't create the variable automatically. Refer to the schematic shown in the Figure \ref{fig:rc_parsw_var} for the example of such simulation mode.
 
-        \begin{figure}[!ht]
-        \begin{center}
-            \includegraphics[width=0.8\textwidth]{rc_parsw_var.png}
-        \end{center}
-        \caption{Magnitude response of the RC-circuit with the parameter sweep}
+\begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{rc_parsw_var.png}
+    \end{center}
+    \caption{Magnitude response of the RC-circuit with the parameter sweep}
     \label{fig:rc_parsw_var}
-    \end{figure}
+\end{figure}
+
+\subsection{Double (nested) sweeps}
+
+In some cases, you need to sweep two parameters, in a nested way. For example, if you want to obtain the $V_{CE}$/$I{C}$ curves of a transistor, you need to sweep the collector--emitter  voltage and, once done it, repeat for a different value of base current. In the figure~\ref{fig:double-sweep-bjt-mos} you can see how you can implement it.
+
+\begin{figure}[!ht]
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{double-sweep-bjt-mos}
+    \end{center}
+    \caption{Comparing the characteristics of BJT and MOSFET with two nested sweeps}
+    \label{fig:double-sweep-bjt-mos}
+\end{figure}
+
+The trick is to first add a parameter sweep, that act on a simulation, exactly as before:
+as you can see, the parameter sweep \texttt{SW1} acts on the \texttt{DC1} simulation. After that, you add another parameter sweep ``block'' that acts \emph{on the previous sweep}: notice how the \texttt{SW2} parameter sweep has \texttt{Sim=SW1}.
+
+After running the simulation, you can plot for example the two currents, which in this case are called \texttt{sw1.i(vic1)} y \texttt{sw1.i(vid1)}, and depends on the rather strange \texttt{sw1.v(v-sweep) sw1.v2}.
 
 \section{Digital simulation}
 
